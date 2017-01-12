@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.advance.monster</groupId>
+    <artifactId>monster-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <artifactId>monster-dao</artifactId>
+  <name>monster-dao</name>
+  
+  <dependencies>
+  	<!-- 依赖model模块 -->
+  	<dependency>
+	    <groupId>com.advance.monster</groupId>
+	    <artifactId>monster-model</artifactId> 
+		<version>${project.parent.version}</version>	     	
+  	</dependency>
+  	
+	<!-- mybatis相关 -->
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.mybatis</groupId>
+	    <artifactId>mybatis-spring</artifactId>
+	</dependency>
+	
+	<!-- Mysql、数据源相关-->		
+	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>druid</artifactId>
+	</dependency>
+  
+  </dependencies>  
+  
+  <build>
+  	<plugins>
+        <plugin>
+    		<groupId>org.mybatis.generator</groupId>
+    		<artifactId>mybatis-generator-maven-plugin</artifactId>
+      	</plugin>  	
+  	</plugins>
+  </build> 
+  
+</project>
