@@ -3,12 +3,12 @@
   <parent>
     <groupId>com.advance.monster</groupId>
     <artifactId>monster-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   
   <!-- 版本相关 -->
   <artifactId>monster-api</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>monster-api</name>
   
