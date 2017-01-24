@@ -91,7 +91,6 @@
 		    <artifactId>maven-war-plugin</artifactId>
 		    <configuration>
 		    	<warName>${project.artifactId}-${project.version}-${profiles.active}-${maven.build.timestamp}</warName>
-		    	<failOnMissingWebXml>false</failOnMissingWebXml>
 		    </configuration>
       	</plugin>  	
   	</plugins>
