@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.advance.monster.model.other.ResponseData;
+
 /**
  * RequestMapping中的value写法为/项目模块/小模块/方法
  * @author Monster
@@ -21,10 +23,12 @@ public class TestController {
 	 */
 	@RequestMapping(value="/exception",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public void testException(){
+	public ResponseData testException(){
 		Integer.parseInt("a");
-		
-		
+		ResponseData rd=new ResponseData();
+		rd.setStatusCode(500);
+		rd.setMessage("接口返回異常");
+		return rd;
 	}
 
 }
