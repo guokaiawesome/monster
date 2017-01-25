@@ -18,7 +18,7 @@
 	<context:component-scan base-package="com.advance.monster.web"></context:component-scan>
 	
 	<!-- 读取配置文件 -->
-	<context:property-placeholder   location="classpath:jdbc.properties"/>
+	<context:property-placeholder   location="classpath:jdbc.properties,classpath:config.properties"/>
 	
 	<!-- ###########context模块end######## -->
 	
@@ -64,7 +64,8 @@
 	<property name="logAbandoned" value="true" />
 	<!-- 监控数据库 -->
 	<!-- <property name="filters" value="stat" /> -->
-	<property name="filters" value="log4j" />
+	<!-- 解密配置文件中的密文 -->
+	<property name="filters" value="decipher" />
 	<property name="proxyFilters">
 		<list>
 			<ref bean="log-filter" />
