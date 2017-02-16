@@ -110,6 +110,12 @@
 	    <artifactId>javax.servlet.jsp-api</artifactId>
 	</dependency>	
 
+		     <!-- java ee jar 包 -->
+    <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <scope>provided</scope>
+    </dependency> 
 	
   </dependencies>
   
