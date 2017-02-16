@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <!--  com.{公司/ BU }.业务线.[子业务线 ] ，最多 4 级,  子业务线可选 -->
   <groupId>com.advance.monster</groupId>
+  <!-- 产品线名-模块名 -->
   <artifactId>monster-parent</artifactId>
-  <version>0.0.1</version>
+  <!-- 主版本号.次版本号.修订号,起始版本号必须为： 1.0.0 ，而不是 0.0.1  -->
+  <version>1.0.0</version>
   <packaging>pom</packaging>
  
  <!-- 子模块 -->
@@ -103,7 +106,7 @@
   
   </properties>
   
-  <!-- 一些需用公用的依赖jar包直接引入,以供下面的模块使用,比如spring相关、log4j、json等 -->
+  <!-- 一些需用公用的依赖jar包直接引入,以供下面的模块使用,比如log4j、junit等 -->
   <dependencies>
         <!-- spring-test结合junit用于测试 -->
 	    <dependency>
@@ -121,31 +124,6 @@
 	    <!-- mockito 也可以用spring-mock --> 
 	    <!-- hamcrest -->
 
-		<!-- spring最基本的jar包 -->
-		<!-- spring-beans这个jar文件是所有应用都要用到的，它包含访问配置文件、创建和管理bean以及进行Inversion of Control / Dependency Injection（IoC/DI）操作相关的所有类 -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-beans</artifactId>
-		    <version>${spring.version}</version>
-		</dependency>
-		<!--  -->	    
-	    <dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-context</artifactId>
-		    <version>${spring.version}</version>
-	    </dependency>	
-		<!-- spring-core这个jar文件包含Spring框架基本的核心工具类，Spring其它组件要都要使用到这个包里的类，是其它组件的基本核心，当然你也可以在自己的应用系统中使用这些工具类。 -->  
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-core</artifactId>
-		    <version>${spring.version}</version>
-		    <exclusions>
-		    	<exclusion>
-			        <groupId>commons-logging</groupId>
-	                <artifactId>commons-logging</artifactId>
-		    	</exclusion>
-		    </exclusions>
-	    </dependency>
 	    		
 		<!-- 使用log4j 来自spring官方文档写法,包括上面spring-core里面去掉commons-logging -->
 		<dependency>
@@ -169,34 +147,7 @@
 		    <version>${log4j-core.version}</version>
 		</dependency>	
 		
-	    <!--JSON处理-->
-	    <dependency>
-	        <groupId>com.fasterxml.jackson.core</groupId>
-	        <artifactId>jackson-databind</artifactId>
-	        <version>${jackson-databind.version}</version>
-	    </dependency>      
-		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>fastjson</artifactId>
-		    <version>${fastjson.version}</version>
-		</dependency>
-
-	    <!--apache工具包-->
-	    <dependency>
-	        <groupId>org.apache.commons</groupId>
-	        <artifactId>commons-lang3</artifactId>
-	        <version>${commons-lang3.version}</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>commons-fileupload</groupId>
-	        <artifactId>commons-fileupload</artifactId>
-	        <version>${commons-fileupload.version}</version>
-	    </dependency>   
-	    <dependency>
-	        <groupId>commons-io</groupId>
-	        <artifactId>commons-io</artifactId>
-	        <version>${commons-io.version}</version>
-	    </dependency>		
+	
 	    
 	  
   </dependencies>
@@ -205,6 +156,27 @@
   <!-- 使用dependcyManagement标签并不会真正引入相关依赖的jar包,需要在各个模块中指定引入某个需要的jar包 -->
   <dependencyManagement>
       <dependencies>	
+      
+      			<!-- spring最基本的jar包 -->
+		<!-- spring-beans这个jar文件是所有应用都要用到的，它包含访问配置文件、创建和管理bean以及进行Inversion of Control / Dependency Injection（IoC/DI）操作相关的所有类 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-beans</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		<!--  -->	    
+	    <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		    <version>${spring.version}</version>
+	    </dependency>	
+		<!-- spring-core这个jar文件包含Spring框架基本的核心工具类，Spring其它组件要都要使用到这个包里的类，是其它组件的基本核心，当然你也可以在自己的应用系统中使用这些工具类。 -->  
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-core</artifactId>
+		    <version>${spring.version}</version>
+	    </dependency>
+      
       
 		<!-- 这个jar文件包含Web应用开发时，用到Spring框架时所需的核心类，包括自动载入WebApplicationContext特性的类、Struts与JSF集成类、文件上传的支持类、Filter类和大量工具辅助类。 -->
 		<dependency>
@@ -336,7 +308,35 @@
 		    <version>${spring-data-mongodb.version}</version>
 		</dependency>
 		
-	     
+	   
+	    	    <!--JSON处理-->
+	    <dependency>
+	        <groupId>com.fasterxml.jackson.core</groupId>
+	        <artifactId>jackson-databind</artifactId>
+	        <version>${jackson-databind.version}</version>
+	    </dependency>      
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>${fastjson.version}</version>
+		</dependency>
+
+	    <!--apache工具包-->
+	    <dependency>
+	        <groupId>org.apache.commons</groupId>
+	        <artifactId>commons-lang3</artifactId>
+	        <version>${commons-lang3.version}</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>commons-fileupload</groupId>
+	        <artifactId>commons-fileupload</artifactId>
+	        <version>${commons-fileupload.version}</version>
+	    </dependency>   
+	    <dependency>
+	        <groupId>commons-io</groupId>
+	        <artifactId>commons-io</artifactId>
+	        <version>${commons-io.version}</version>
+	    </dependency>	  
       
       </dependencies>
   
