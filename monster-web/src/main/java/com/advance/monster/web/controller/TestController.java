@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.advance.monster.model.DO.DemoDo;
 import com.advance.monster.model.other.ResponseData;
 
 /**
@@ -28,11 +29,11 @@ public class TestController {
 	 */
 	@RequestMapping(value="/exception",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public ResponseData testException(){
+	public ResponseData<DemoDo> testException(){
 		Integer.parseInt("a");
 		ResponseData rd=new ResponseData();
-		rd.setStatusCode(500);
-		rd.setMessage("接口返回異常");
+		//rd.setStatusCode(500);
+		//rd.setMessage("接口返回異常");
 		logger.info("");
 		return rd;
 	}
