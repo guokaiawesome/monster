@@ -1,10 +1,18 @@
 package com.advance.monster.model.other;
 
+
 public class ResponseData<T> {
 	
 	private StatusCode statusCode;
 	
 	private T body;
+	
+	
+	public ResponseData(StatusCode statusCode, T body) {
+		super();
+		this.statusCode = statusCode;
+		this.body = body;
+	}
 
 	public StatusCode getStatusCode() {
 		return statusCode;
