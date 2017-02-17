@@ -8,6 +8,11 @@ import java.util.Date;
  * @since 2017-02-16
  * 对应数据库的表名
  * 所有表必备三字段： id,gmt_create,gmt_modified,建议加上remark字段
+ * 任何字段如果为非负数，必须是 unsigned
+ * 表达是与否概念的字段,必须使用 is_xxx的方式命名,数据类型是 unsigned tinyint(1表示是,0表示否)
+ * 唯一索引名为 uk _字段名 ； 普通索引名则为 idx _字段名
+ * 小数类型为 decimal ，禁止使用 float 和 double
+ * 如果存储的字符串长度几乎相等，使用 char 定长字符串类型
  * 所有的 POJO 类属性必须使用包装数据类型
  * 所有POJO 类必须写 toString 方法
  * Boolean类型变量不用用is开头
