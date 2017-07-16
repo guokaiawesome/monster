@@ -1,4 +1,4 @@
-package com.advance.monster.dao;
+package com.advance.monster.mapper;
 
 public interface TestDao {
 	public void get();

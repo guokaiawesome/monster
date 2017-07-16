@@ -12,7 +12,7 @@
             <property name="suppressAllComments" value="true"/>  
         </commentGenerator>  
   
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://10.9.31.59:3306/sendcloud" userId="sendcloud_r" password="GBDgo77r">  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://0.0.0.0:3306/sendcloud" userId="sendcloud_r" password="GBDgo77r">  
         </jdbcConnection>  
   
         <javaTypeResolver>  

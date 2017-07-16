@@ -1,4 +1,4 @@
-package com.advance.monster.model.DO;
+package com.advance.monster.model.po;
 
 import java.util.Date;
 
