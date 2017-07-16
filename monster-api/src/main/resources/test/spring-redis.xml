@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	   http://www.springframework.org/schema/context  
+	   http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+
+	<!-- Redis Sentinel主从高可用的配置参考http://www.360doc.com/content/16/0722/10/203871_577489465.shtml-->
+
+	<!-- 连接池的配置 -->  
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxTotal" value="${redis.maxTotal}" />  
+        <property name="maxIdle" value="${redis.maxIdle}" />  
+        <property name="maxWaitMillis" value="${redis.maxWait}" />  
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
+        <property name="testOnReturn" value="${redis.testOnReturn}" />  
+    </bean>
+    
+
+	<bean id="jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" >
+				<!-- 连接池配置. -->
+		<property name="poolConfig" ref="jedisPoolConfig" />
+		<!-- Redis服务主机. -->
+		<property name="hostName" value="${redis.host}" />
+		<!-- Redis服务端口号. -->
+		<property name="port" value="${redis.port}" />
+		<!-- Redis服务连接密码. 
+		<property name="password" value="${redis.passwd}" />
+		-->
+		<!-- 连超时设置. -->
+		<property name="timeout" value="${redis.timeout}" />
+		<!-- 是否使用连接池. -->
+		<property name="usePool" value="true" />
+	</bean>
+	
+	<!-- redisTemplate -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connection-factory-ref="jedisConnectionFactory"/>
+	
+	<!-- stringRedisTemplate -->
+	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="jedisConnectionFactory"/>
+	
+
+</beans>

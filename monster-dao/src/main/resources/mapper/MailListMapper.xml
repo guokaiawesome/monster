@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifaxin.api.dao.MailListMapper">
+  <resultMap id="BaseResultMap" type="com.ifaxin.api.po.MailList">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="list_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="custom_field" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="field_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_show" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="is_grade" javaType="java.lang.Short" jdbcType="SMALLINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, address, name, list_type, custom_field, field_type, is_show, description, 
+    gmt_created, gmt_modified, is_grade
+  </sql>
+  <sql id="Base_Column_List_page">
+    a.id, a.user_id, a.address, a.name, a.list_type, a.custom_field, a.field_type, a.is_show, a.description, 
+    a.gmt_created, a.gmt_modified, a.is_grade
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mailing_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByDto" parameterType="com.ifaxin.api.dto.MailListDto" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mailing_list
+    <where>
+      <if test="userId != null">
+        AND user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="address != null">
+        AND address = #{address,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+        AND name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="listType != null">
+        AND list_type = #{listType,jdbcType=INTEGER}
+      </if>
+      <if test="customField != null">
+        AND custom_field = #{customField,jdbcType=VARCHAR}
+      </if>
+      <if test="fieldType != null">
+        AND field_type = #{fieldType,jdbcType=VARCHAR}
+      </if>
+      <if test="isShow != null">
+        AND is_show = #{isShow,jdbcType=INTEGER}
+      </if>
+      <if test="description != null">
+        AND description = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test="gmtCreated != null">
+        AND gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModified != null">
+        AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isGrade != null">
+        AND is_grade = #{isGrade,jdbcType=SMALLINT}
+      </if>
+    </where>
+    <if test="sortField != null">
+         ORDER BY ${sortField} ${direction}
+      </if>
+  </select>
+  
+  <select id="selectWithPageByDto" parameterType="com.ifaxin.api.dto.MailListDto" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List_page" />
+    from mailing_list a ,
+    <trim prefix="( select id from mailing_list " suffix=") b">
+	    <where>
+	      <if test="userId != null">
+	        AND user_id = #{userId,jdbcType=INTEGER}
+	      </if>
+	      <if test="address != null">
+	        AND address = #{address,jdbcType=VARCHAR}
+	      </if>
+	      <if test="name != null">
+	        AND name = #{name,jdbcType=VARCHAR}
+	      </if>
+	      <if test="listType != null">
+	        AND list_type = #{listType,jdbcType=INTEGER}
+	      </if>
+	      <if test="customField != null">
+	        AND custom_field = #{customField,jdbcType=VARCHAR}
+	      </if>
+	      <if test="fieldType != null">
+	        AND field_type = #{fieldType,jdbcType=VARCHAR}
+	      </if>
+	      <if test="isShow != null">
+	        AND is_show = #{isShow,jdbcType=INTEGER}
+	      </if>
+	      <if test="description != null">
+	        AND description = #{description,jdbcType=VARCHAR}
+	      </if>
+	      <if test="gmtCreated != null">
+	        AND gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="gmtModified != null">
+	        AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="isGrade != null">
+	        AND is_grade = #{isGrade,jdbcType=SMALLINT}
+	      </if>
+	    </where>
+	    limit ${offset},${limit}
+    </trim>
+    where a.id=b.id
+ 	<if test="sortField != null">
+      ORDER BY a.${sortField} ${direction}
+   	</if>
+  </select>
+
+  <select id="countByDto" parameterType="com.ifaxin.api.dto.MailListDto" resultType="java.lang.Integer" >
+    select count(*) as count from mailing_list
+    <where>
+      <if test="userId != null">
+        AND user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="address != null">
+        AND address = #{address,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+        AND name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="listType != null">
+        AND list_type = #{listType,jdbcType=INTEGER}
+      </if>
+      <if test="customField != null">
+        AND custom_field = #{customField,jdbcType=VARCHAR}
+      </if>
+      <if test="fieldType != null">
+        AND field_type = #{fieldType,jdbcType=VARCHAR}
+      </if>
+      <if test="isShow != null">
+        AND is_show = #{isShow,jdbcType=INTEGER}
+      </if>
+      <if test="description != null">
+        AND description = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test="gmtCreated != null">
+        AND gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModified != null">
+        AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isGrade != null">
+        AND is_grade = #{isGrade,jdbcType=SMALLINT}
+      </if>
+    </where>
+  </select>  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mailing_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ifaxin.api.po.MailList">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into mailing_list (user_id, address, name, 
+      list_type, custom_field, field_type, 
+      is_show, description, gmt_created, 
+      gmt_modified, is_grade)
+    values (#{userId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{listType,jdbcType=INTEGER}, #{customField,jdbcType=VARCHAR}, #{fieldType,jdbcType=VARCHAR}, 
+      #{isShow,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{isGrade,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ifaxin.api.po.MailList">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into mailing_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="listType != null">
+        list_type,
+      </if>
+      <if test="customField != null">
+        custom_field,
+      </if>
+      <if test="fieldType != null">
+        field_type,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="isGrade != null">
+        is_grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="listType != null">
+        #{listType,jdbcType=INTEGER},
+      </if>
+      <if test="customField != null">
+        #{customField,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldType != null">
+        #{fieldType,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isGrade != null">
+        #{isGrade,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ifaxin.api.po.MailList">
+    update mailing_list
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="listType != null">
+        list_type = #{listType,jdbcType=INTEGER},
+      </if>
+      <if test="customField != null">
+        custom_field = #{customField,jdbcType=VARCHAR},
+      </if>
+      <if test="fieldType != null">
+        field_type = #{fieldType,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isGrade != null">
+        is_grade = #{isGrade,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ifaxin.api.po.MailList">
+    update mailing_list
+    set user_id = #{userId,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      list_type = #{listType,jdbcType=INTEGER},
+      custom_field = #{customField,jdbcType=VARCHAR},
+      field_type = #{fieldType,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      is_grade = #{isGrade,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

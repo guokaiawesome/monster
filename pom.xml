@@ -359,15 +359,17 @@
       <resources>
       	    <!-- 资源文件目录:各种properties文件 -->  
       	  <resource>
-      	  	  <directory>${basedir}/src/main/resources/${profiles.active}</directory>
+      	  	  <directory>${basedir}/src/main/resources/properties/${profiles.active}</directory>
       	  	  <includes>
       	  	  	<include>*.properties</include>
+      	  	  	<include>*.xml</include>      	  	  	
       	  	  </includes>
       	  </resource>
       	    <!-- 资源文件目录:spring、mvc、mybatis的xml文件 -->
       	  <resource>
       	  	  <directory>${basedir}/src/main/resources</directory>
       	  	  <includes>
+      	  	  	<include>*.properties</include>      	  	  
       	  	  	<include>*.xml</include>
       	  	  	<include>mappers/*.xml</include>
       	  	  </includes>

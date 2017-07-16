@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifaxin.api.dao.IfxApiAppMapper">
+  <resultMap id="BaseResultMap" type="com.ifaxin.api.result.db.IfxApiAppDbRet">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="app_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="app_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="scope" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="remark" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="reserved_field1" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="reserved_field2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reserved_field3" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, app_name, app_id, scope, remark, gmt_created, 
+    gmt_modified, reserved_field1, reserved_field2, reserved_field3
+  </sql>
+  <sql id="Base_Column_List_page">
+    a.id, a.user_id, a.app_name, a.app_id, a.scope, a.remark, a.gmt_created, 
+    a.gmt_modified, a.reserved_field1, a.reserved_field2, a.reserved_field3
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ifx_api_app
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByDto" parameterType="com.ifaxin.api.dto.IfxApiAppDto" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ifx_api_app
+    <where>
+       <if test="userId != null">
+        AND user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="appName != null">
+        AND app_name = #{appName,jdbcType=VARCHAR}
+      </if>
+      <if test="appId != null">
+        AND app_id = #{appId,jdbcType=VARCHAR}
+      </if>
+      <if test="appSecret != null">
+        AND app_secret = #{appSecret,jdbcType=VARCHAR}
+      </if>
+      <if test="scope != null">
+        AND scope = #{scope,jdbcType=VARCHAR}
+      </if>
+      <if test="accessToken != null">
+        AND access_token = #{accessToken,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="gmtCreated != null">
+        AND gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModified != null">
+        AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      </if>
+      <if test="reservedField1 != null">
+        AND reserved_field1 = #{reservedField1,jdbcType=INTEGER}
+      </if>
+      <if test="reservedField2 != null">
+        AND reserved_field2 = #{reservedField2,jdbcType=VARCHAR}
+      </if>
+      <if test="reservedField3 != null">
+        AND reserved_field3 = #{reservedField3,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <!-- 这个sql需要打出来看下验证下 -->
+  <select id="selectWithPageByDto" parameterType="com.ifaxin.api.dto.IfxApiAppDto" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ifx_api_app a,
+    <trim prefix="( select id from ifx_api_app " suffix=") b" >
+       <where>
+       <if test="userId != null">
+        AND user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="appName != null">
+        AND app_name = #{appName,jdbcType=VARCHAR}
+      </if>
+      <if test="appId != null">
+        AND app_id = #{appId,jdbcType=VARCHAR}
+      </if>
+      <if test="appSecret != null">
+        AND app_secret = #{appSecret,jdbcType=VARCHAR}
+      </if>
+      <if test="scope != null">
+        AND scope = #{scope,jdbcType=VARCHAR}
+      </if>
+      <if test="accessToken != null">
+        AND access_token = #{accessToken,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="gmtCreated != null">
+        AND gmt_created = #{gmtCreated,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModified != null">
+        AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      </if>
+      <if test="reservedField1 != null">
+        AND reserved_field1 = #{reservedField1,jdbcType=INTEGER}
+      </if>
+      <if test="reservedField2 != null">
+        AND reserved_field2 = #{reservedField2,jdbcType=VARCHAR}
+      </if>
+      <if test="reservedField3 != null">
+        AND reserved_field3 = #{reservedField3,jdbcType=VARCHAR}
+      </if>
+    </where>
+    limit ${offset},${limit}
+    </trim>
+    where a.id=b.id
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ifx_api_app
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ifaxin.api.po.IfxApiApp" >
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ifx_api_app (user_id, app_name, app_id, 
+      app_secret, scope, access_token, 
+      remark, gmt_created, gmt_modified, 
+      reserved_field1, reserved_field2, reserved_field3
+      )
+    values (#{userId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{appSecret,jdbcType=VARCHAR}, #{scope,jdbcType=VARCHAR}, #{accessToken,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{reservedField1,jdbcType=INTEGER}, #{reservedField2,jdbcType=VARCHAR}, #{reservedField3,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ifaxin.api.po.IfxApiApp">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ifx_api_app
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="appName != null">
+        app_name,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="appSecret != null">
+        app_secret,
+      </if>
+      <if test="scope != null">
+        scope,
+      </if>
+      <if test="accessToken != null">
+        access_token,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="reservedField1 != null">
+        reserved_field1,
+      </if>
+      <if test="reservedField2 != null">
+        reserved_field2,
+      </if>
+      <if test="reservedField3 != null">
+        reserved_field3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appName != null">
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null">
+        #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null">
+        #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservedField1 != null">
+        #{reservedField1,jdbcType=INTEGER},
+      </if>
+      <if test="reservedField2 != null">
+        #{reservedField2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField3 != null">
+        #{reservedField3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ifaxin.api.po.IfxApiApp">
+    update ifx_api_app
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null">
+        app_secret = #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null">
+        scope = #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reservedField1 != null">
+        reserved_field1 = #{reservedField1,jdbcType=INTEGER},
+      </if>
+      <if test="reservedField2 != null">
+        reserved_field2 = #{reservedField2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField3 != null">
+        reserved_field3 = #{reservedField3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ifaxin.api.po.IfxApiApp">
+    update ifx_api_app
+    set user_id = #{userId,jdbcType=INTEGER},
+      app_name = #{appName,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      app_secret = #{appSecret,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=VARCHAR},
+      access_token = #{accessToken,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      reserved_field1 = #{reservedField1,jdbcType=INTEGER},
+      reserved_field2 = #{reservedField2,jdbcType=VARCHAR},
+      reserved_field3 = #{reservedField3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifaxin.api.dao.UserPwdMapper">
+  <resultMap id="BaseResultMap" type="com.ifaxin.api.po.UserPwd">
+    <constructor>
+      <idArg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <idArg column="application_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from user_pwd
+    where user_name = #{userName,jdbcType=VARCHAR}
+      and application_id = #{applicationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ifaxin.api.po.UserPwd">
+    insert into user_pwd (user_name, application_id, password, 
+      create_time, update_time)
+    values (#{userName,jdbcType=VARCHAR}, #{applicationId,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.ifaxin.api.po.UserPwd">
+    update user_pwd
+    set password = #{password,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_name = #{userName,jdbcType=VARCHAR}
+      and application_id = #{applicationId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select user_name, application_id, password, create_time, update_time
+    from user_pwd
+    where user_name = #{userName,jdbcType=VARCHAR}
+      and application_id = #{applicationId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select user_name, application_id, password, create_time, update_time
+    from user_pwd
+  </select>
+</mapper>

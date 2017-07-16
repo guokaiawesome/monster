@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifaxin.api.dao.EmailGradeTaskMapper">
+  <resultMap id="BaseResultMap" type="com.ifaxin.api.po.EmailGradeTask">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mail_list_ids" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cond_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="return_message" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="billing_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="email_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="money" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="is_retry" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="operate_machine" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_delete" javaType="java.lang.Byte" jdbcType="TINYINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, user_type, name, mail_list_ids, cond_type, status, return_message, billing_status, 
+    email_count, money, is_retry, operate_machine, is_delete, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from email_grade_task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByDto" parameterType="com.ifaxin.api.dto.EmailGradeTaskDto" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from email_grade_task
+    <where>
+      <if test="userId != null">
+        AND user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="id != null">
+        AND id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="idList != null">
+          AND id in
+        <foreach item="item"  collection="idList" open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+      </if>        
+      <if test="userType != null">
+        AND user_type = #{userType,jdbcType=INTEGER}
+      </if>    
+      <if test="name != null">
+        AND name = #{name,jdbcType=VARCHAR}
+      </if>   
+      <if test="nameLike != null">
+        AND name like concat('%',#{nameLike},'%')
+      </if>   
+      <if test="mailListIds != null">
+        AND mail_list_ids = #{mailListIds,jdbcType=VARCHAR}
+      </if>
+      <if test="condType != null">
+        AND cond_type = #{condType,jdbcType=INTEGER}
+      </if>    
+      <if test="status != null">
+        AND status = #{status,jdbcType=INTEGER}
+      </if> 
+      <if test="statusList != null">
+          AND status in
+        <foreach item="item"  collection="statusList" open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+      </if>  
+      <if test="exStatusList != null">
+          AND status not in
+        <foreach item="item"  collection="exStatusList" open="(" separator="," close=")">
+        #{item}
+  		</foreach>
+      </if>  
+      <if test="returnMessage != null">
+        AND return_message = #{returnMessage,jdbcType=VARCHAR}
+      </if>      
+      <if test="billingStatus != null">
+        AND billing_status = #{billingStatus,jdbcType=VARCHAR}
+      </if>                                          
+    </where>
+  </select>  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from email_grade_task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ifaxin.api.po.EmailGradeTask">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into email_grade_task (user_id, user_type, name, 
+      mail_list_ids, cond_type, status, 
+      return_message, billing_status, email_count, 
+      money, is_retry, operate_machine, 
+      is_delete, create_time, update_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{mailListIds,jdbcType=VARCHAR}, #{condType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{returnMessage,jdbcType=VARCHAR}, #{billingStatus,jdbcType=INTEGER}, #{emailCount,jdbcType=INTEGER}, 
+      #{money,jdbcType=DOUBLE}, #{isRetry,jdbcType=INTEGER}, #{operateMachine,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ifaxin.api.po.EmailGradeTask">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into email_grade_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="mailListIds != null">
+        mail_list_ids,
+      </if>
+      <if test="condType != null">
+        cond_type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="returnMessage != null">
+        return_message,
+      </if>
+      <if test="billingStatus != null">
+        billing_status,
+      </if>
+      <if test="emailCount != null">
+        email_count,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="isRetry != null">
+        is_retry,
+      </if>
+      <if test="operateMachine != null">
+        operate_machine,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mailListIds != null">
+        #{mailListIds,jdbcType=VARCHAR},
+      </if>
+      <if test="condType != null">
+        #{condType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="returnMessage != null">
+        #{returnMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="billingStatus != null">
+        #{billingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="emailCount != null">
+        #{emailCount,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="isRetry != null">
+        #{isRetry,jdbcType=INTEGER},
+      </if>
+      <if test="operateMachine != null">
+        #{operateMachine,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ifaxin.api.po.EmailGradeTask">
+    update email_grade_task
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mailListIds != null">
+        mail_list_ids = #{mailListIds,jdbcType=VARCHAR},
+      </if>
+      <if test="condType != null">
+        cond_type = #{condType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="returnMessage != null">
+        return_message = #{returnMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="billingStatus != null">
+        billing_status = #{billingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="emailCount != null">
+        email_count = #{emailCount,jdbcType=INTEGER},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="isRetry != null">
+        is_retry = #{isRetry,jdbcType=INTEGER},
+      </if>
+      <if test="operateMachine != null">
+        operate_machine = #{operateMachine,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ifaxin.api.po.EmailGradeTask">
+    update email_grade_task
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      mail_list_ids = #{mailListIds,jdbcType=VARCHAR},
+      cond_type = #{condType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      return_message = #{returnMessage,jdbcType=VARCHAR},
+      billing_status = #{billingStatus,jdbcType=INTEGER},
+      email_count = #{emailCount,jdbcType=INTEGER},
+      money = #{money,jdbcType=DOUBLE},
+      is_retry = #{isRetry,jdbcType=INTEGER},
+      operate_machine = #{operateMachine,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

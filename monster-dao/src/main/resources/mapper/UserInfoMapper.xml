@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifaxin.api.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.ifaxin.api.po.UserInfo">
+    <constructor>
+      <idArg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="account_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email_volumn" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="reputation" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="balance" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="type_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="billing_plan_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="flow_billing_plan_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sms_billing_plan_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="attachment_billing_plan_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="email_grade_billing_plan_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="first_deposit_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_created" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="pre_account_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="alert_balance" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="is_verify" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="mark_status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="transaction_rate" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="marketing_rate" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="first_send_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="sms_first_send_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="exmail" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_name, passwd, account_type, user_type, parent_id, email, phone, email_volumn, 
+    reputation, balance, type_time, billing_plan_id, flow_billing_plan_id, sms_billing_plan_id, 
+    attachment_billing_plan_id, email_grade_billing_plan_id, first_deposit_time, gmt_created, 
+    pre_account_type, alert_balance, is_verify, mark_status, transaction_rate, marketing_rate, 
+    first_send_time, sms_first_send_time, exmail, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectUserIdByUserName" parameterType="java.lang.String" resultType="java.lang.Integer" >
+    select user_id
+    from user_info
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ifaxin.api.po.UserInfo">
+    insert into user_info (user_id, user_name, passwd, 
+      account_type, user_type, parent_id, 
+      email, phone, email_volumn, 
+      reputation, balance, type_time, 
+      billing_plan_id, flow_billing_plan_id, sms_billing_plan_id, 
+      attachment_billing_plan_id, email_grade_billing_plan_id, 
+      first_deposit_time, gmt_created, pre_account_type, 
+      alert_balance, is_verify, mark_status, 
+      transaction_rate, marketing_rate, first_send_time, 
+      sms_first_send_time, exmail, update_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=INTEGER}, #{userType,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{emailVolumn,jdbcType=INTEGER}, 
+      #{reputation,jdbcType=DOUBLE}, #{balance,jdbcType=DOUBLE}, #{typeTime,jdbcType=TIMESTAMP}, 
+      #{billingPlanId,jdbcType=INTEGER}, #{flowBillingPlanId,jdbcType=INTEGER}, #{smsBillingPlanId,jdbcType=INTEGER}, 
+      #{attachmentBillingPlanId,jdbcType=INTEGER}, #{emailGradeBillingPlanId,jdbcType=INTEGER}, 
+      #{firstDepositTime,jdbcType=TIMESTAMP}, #{gmtCreated,jdbcType=TIMESTAMP}, #{preAccountType,jdbcType=INTEGER}, 
+      #{alertBalance,jdbcType=INTEGER}, #{isVerify,jdbcType=INTEGER}, #{markStatus,jdbcType=INTEGER}, 
+      #{transactionRate,jdbcType=INTEGER}, #{marketingRate,jdbcType=INTEGER}, #{firstSendTime,jdbcType=TIMESTAMP}, 
+      #{smsFirstSendTime,jdbcType=TIMESTAMP}, #{exmail,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ifaxin.api.po.UserInfo">
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="emailVolumn != null">
+        email_volumn,
+      </if>
+      <if test="reputation != null">
+        reputation,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="typeTime != null">
+        type_time,
+      </if>
+      <if test="billingPlanId != null">
+        billing_plan_id,
+      </if>
+      <if test="flowBillingPlanId != null">
+        flow_billing_plan_id,
+      </if>
+      <if test="smsBillingPlanId != null">
+        sms_billing_plan_id,
+      </if>
+      <if test="attachmentBillingPlanId != null">
+        attachment_billing_plan_id,
+      </if>
+      <if test="emailGradeBillingPlanId != null">
+        email_grade_billing_plan_id,
+      </if>
+      <if test="firstDepositTime != null">
+        first_deposit_time,
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created,
+      </if>
+      <if test="preAccountType != null">
+        pre_account_type,
+      </if>
+      <if test="alertBalance != null">
+        alert_balance,
+      </if>
+      <if test="isVerify != null">
+        is_verify,
+      </if>
+      <if test="markStatus != null">
+        mark_status,
+      </if>
+      <if test="transactionRate != null">
+        transaction_rate,
+      </if>
+      <if test="marketingRate != null">
+        marketing_rate,
+      </if>
+      <if test="firstSendTime != null">
+        first_send_time,
+      </if>
+      <if test="smsFirstSendTime != null">
+        sms_first_send_time,
+      </if>
+      <if test="exmail != null">
+        exmail,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="emailVolumn != null">
+        #{emailVolumn,jdbcType=INTEGER},
+      </if>
+      <if test="reputation != null">
+        #{reputation,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="typeTime != null">
+        #{typeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billingPlanId != null">
+        #{billingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="flowBillingPlanId != null">
+        #{flowBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="smsBillingPlanId != null">
+        #{smsBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="attachmentBillingPlanId != null">
+        #{attachmentBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="emailGradeBillingPlanId != null">
+        #{emailGradeBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="firstDepositTime != null">
+        #{firstDepositTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreated != null">
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preAccountType != null">
+        #{preAccountType,jdbcType=INTEGER},
+      </if>
+      <if test="alertBalance != null">
+        #{alertBalance,jdbcType=INTEGER},
+      </if>
+      <if test="isVerify != null">
+        #{isVerify,jdbcType=INTEGER},
+      </if>
+      <if test="markStatus != null">
+        #{markStatus,jdbcType=INTEGER},
+      </if>
+      <if test="transactionRate != null">
+        #{transactionRate,jdbcType=INTEGER},
+      </if>
+      <if test="marketingRate != null">
+        #{marketingRate,jdbcType=INTEGER},
+      </if>
+      <if test="firstSendTime != null">
+        #{firstSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsFirstSendTime != null">
+        #{smsFirstSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exmail != null">
+        #{exmail,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ifaxin.api.po.UserInfo">
+    update user_info
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="emailVolumn != null">
+        email_volumn = #{emailVolumn,jdbcType=INTEGER},
+      </if>
+      <if test="reputation != null">
+        reputation = #{reputation,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="typeTime != null">
+        type_time = #{typeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billingPlanId != null">
+        billing_plan_id = #{billingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="flowBillingPlanId != null">
+        flow_billing_plan_id = #{flowBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="smsBillingPlanId != null">
+        sms_billing_plan_id = #{smsBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="attachmentBillingPlanId != null">
+        attachment_billing_plan_id = #{attachmentBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="emailGradeBillingPlanId != null">
+        email_grade_billing_plan_id = #{emailGradeBillingPlanId,jdbcType=INTEGER},
+      </if>
+      <if test="firstDepositTime != null">
+        first_deposit_time = #{firstDepositTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreated != null">
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preAccountType != null">
+        pre_account_type = #{preAccountType,jdbcType=INTEGER},
+      </if>
+      <if test="alertBalance != null">
+        alert_balance = #{alertBalance,jdbcType=INTEGER},
+      </if>
+      <if test="isVerify != null">
+        is_verify = #{isVerify,jdbcType=INTEGER},
+      </if>
+      <if test="markStatus != null">
+        mark_status = #{markStatus,jdbcType=INTEGER},
+      </if>
+      <if test="transactionRate != null">
+        transaction_rate = #{transactionRate,jdbcType=INTEGER},
+      </if>
+      <if test="marketingRate != null">
+        marketing_rate = #{marketingRate,jdbcType=INTEGER},
+      </if>
+      <if test="firstSendTime != null">
+        first_send_time = #{firstSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsFirstSendTime != null">
+        sms_first_send_time = #{smsFirstSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exmail != null">
+        exmail = #{exmail,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ifaxin.api.po.UserInfo">
+    update user_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email_volumn = #{emailVolumn,jdbcType=INTEGER},
+      reputation = #{reputation,jdbcType=DOUBLE},
+      balance = #{balance,jdbcType=DOUBLE},
+      type_time = #{typeTime,jdbcType=TIMESTAMP},
+      billing_plan_id = #{billingPlanId,jdbcType=INTEGER},
+      flow_billing_plan_id = #{flowBillingPlanId,jdbcType=INTEGER},
+      sms_billing_plan_id = #{smsBillingPlanId,jdbcType=INTEGER},
+      attachment_billing_plan_id = #{attachmentBillingPlanId,jdbcType=INTEGER},
+      email_grade_billing_plan_id = #{emailGradeBillingPlanId,jdbcType=INTEGER},
+      first_deposit_time = #{firstDepositTime,jdbcType=TIMESTAMP},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      pre_account_type = #{preAccountType,jdbcType=INTEGER},
+      alert_balance = #{alertBalance,jdbcType=INTEGER},
+      is_verify = #{isVerify,jdbcType=INTEGER},
+      mark_status = #{markStatus,jdbcType=INTEGER},
+      transaction_rate = #{transactionRate,jdbcType=INTEGER},
+      marketing_rate = #{marketingRate,jdbcType=INTEGER},
+      first_send_time = #{firstSendTime,jdbcType=TIMESTAMP},
+      sms_first_send_time = #{smsFirstSendTime,jdbcType=TIMESTAMP},
+      exmail = #{exmail,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

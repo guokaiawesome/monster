@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
 	
-	<display-name>monster-api</display-name>
+	<display-name>ifaxin-api</display-name>
 	
-	<!--以下配置的加载顺序:先 ServletContext >> context-param >> listener >> filter >> servlet--> 
 	
 	<!--全局范围内环境参数初始化，一般用于加载spring的配置文件到上下文中等-->  
 	<context-param>
 		<description>spring配置</description>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring-mybatis.xml,classpath:spring.xml,classpath:spring-mvc.xml</param-value>
+		<param-value>classpath:spring.xml</param-value>
 	</context-param>
 
 	<!--spring监听器   从spring.xml中加载Bean--> 
@@ -17,23 +16,41 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<!-- servlet分发器 -->
+		<!-- servlet分发器 -->
 	<servlet>     
-        <servlet-name>SpringMVC</servlet-name> 
+        <servlet-name>ifaxinapi</servlet-name> 
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>        
         <load-on-startup>1</load-on-startup>
     </servlet>  
     <servlet-mapping>
-        <servlet-name>SpringMVC</servlet-name>  
-		<!--下面的/    不要写成/* -->
+        <servlet-name>ifaxinapi</servlet-name>  
         <url-pattern>/</url-pattern>       
-    </servlet-mapping>  
+    </servlet-mapping> 
     
-    <!-- session失效时间,单位为分钟 -->
-    <session-config>
-    	<session-timeout>30</session-timeout>
-    </session-config> 
-    
+           <!-- durid数据库监控    详细看下官方文档-->
+    <servlet>  
+        <servlet-name>DruidStatView</servlet-name>  
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>  
+    </servlet>  
+	<servlet-mapping>  
+        <servlet-name>DruidStatView</servlet-name>  
+        <url-pattern>/druid/*</url-pattern>  
+    </servlet-mapping> 
+	
+	
+	<filter>
+		<filter-name>CustomCorsFilter</filter-name>
+		<filter-class>com.ifaxin.api.filter.CustomCorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CustomCorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+	
     <!-- 字符集编码过滤器 -->
     <filter>  
     	<filter-name>CharsetEncodingFilter</filter-name>  
@@ -51,22 +68,42 @@
 	    <filter-name>CharsetEncodingFilter</filter-name>  
 	    <url-pattern>/*</url-pattern>  
 	</filter-mapping> 
-   
-   
-       <!-- durid数据库监控    详细看下官方文档-->
-    <servlet>  
-        <servlet-name>DruidStatView</servlet-name>  
-        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>  
-    </servlet>  
-	<servlet-mapping>  
-        <servlet-name>DruidStatView</servlet-name>  
-        <url-pattern>/druid/*</url-pattern>  
-    </servlet-mapping> 
-   
-    <!--定义首页列单.-->
-    <welcome-file-list>  
-        <welcome-file>/index.jsp</welcome-file> 
-    </welcome-file-list>  
 	
+  
+	<filter>
+	    <filter-name>MultipartFilter</filter-name>
+	    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>MultipartFilter</filter-name>
+	    <servlet-name>ifaxinapi</servlet-name>
+	</filter-mapping>  
+   
+   
+   	<filter>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>    
+    <filter-mapping>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>  
+    
+    <filter>
+        <filter-name>HttpPutFormContentFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+    </filter>    
+    <filter-mapping>
+        <filter-name>HttpPutFormContentFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+   
+       <!-- session失效时间,单位为分钟 -->
+    <session-config>
+    	<session-timeout>30</session-timeout>
+    </session-config> 
+
+    
+   
 	
 </web-app>
