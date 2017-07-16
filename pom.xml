@@ -159,7 +159,7 @@
 		    <version>${log4j-core.version}</version>
 		  </dependency> 	     
 		
-	
+	<!-- 把所有工具类全部放在这里 -->
 	    
 	  
   </dependencies>
