@@ -114,6 +114,15 @@
         <artifactId>javaee-api</artifactId>
         <scope>provided</scope>
     </dependency> 
+    
+	<dependency>
+	    <groupId>org.thymeleaf</groupId>
+	    <artifactId>thymeleaf</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.thymeleaf</groupId>
+	    <artifactId>thymeleaf-spring4</artifactId>
+	</dependency>    
 	
   </dependencies>
   

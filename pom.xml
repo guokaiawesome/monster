@@ -43,7 +43,7 @@
     	<!--  junit测试框架 -->
     <junit.version>4.12</junit.version>
     	<!-- mySql -->
-    <mysql-connector-java.version>6.0.5</mysql-connector-java.version>
+    <mysql-connector-java.version>5.1.41</mysql-connector-java.version>
     	<!-- Druid连接池 来自阿里 -->
     <druid.version>1.0.27</druid.version>
         <!-- log4j -->
@@ -80,6 +80,8 @@
     <spring-data-redis.version>1.7.5.RELEASE</spring-data-redis.version>
     
     <spring-data-mongodb.version>1.9.5.RELEASE</spring-data-mongodb.version>
+    
+    <thymeleaf.version>3.0.3.RELEASE</thymeleaf.version>
     
     <!-- jar包版本变量 end  -->
     
@@ -136,16 +138,26 @@
 	        <artifactId>slf4j-api</artifactId>
 	        <version>${slf4j.version}</version>
 	    </dependency>
-	    <dependency>
+<!-- 	    <dependency>
 	        <groupId>org.slf4j</groupId>
 	        <artifactId>slf4j-log4j12</artifactId>
 	        <version>${slf4j.version}</version>
-	    </dependency>
+	    </dependency> -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-core</artifactId>
 		    <version>${log4j-core.version}</version>
 		</dependency>	
+		<dependency>
+	        <groupId>org.apache.logging.log4j</groupId>
+	        <artifactId>log4j-api</artifactId>
+	        <version>${log4j-core.version}</version>
+	     </dependency>
+		  <dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-slf4j-impl</artifactId>
+		    <version>${log4j-core.version}</version>
+		  </dependency> 	     
 		
 	
 	    
@@ -357,6 +369,7 @@
       	  	  <directory>${basedir}/src/main/resources</directory>
       	  	  <includes>
       	  	  	<include>*.xml</include>
+      	  	  	<include>mappers/*.xml</include>
       	  	  </includes>
       	  </resource>      	  
       </resources>

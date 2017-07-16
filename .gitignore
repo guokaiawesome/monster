@@ -3,6 +3,17 @@
 #javaºöÂÔÎÄ¼ş
 
 *.class
+logs/
+/logs/
+log/
+/log/
+*.classpath
+*.project
+/.settings/
+.settings/
+/target/
+target/
+
 
 # BlueJ files
 
